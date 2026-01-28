@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌱 Touching Grass Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>">
+</head>
+<body>
+    <div id="grass-field">
+        <div class="sky"></div>
+        
+        <!-- UI Elements -->
+        <div class="ui">
+            <div class="title">
+                <h1>🌱 Touching Grass Simulator</h1>
+                <p>For those who need to touch grass but can't leave their screen</p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number" id="touch-counter">0</span>
+                    <span class="stat-label">Grass Touches</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="time-spent">0s</span>
+                    <span class="stat-label">Time Outside</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hand Cursor -->
+        <div id="hand-cursor">👋</div>
+        
+        <!-- Grass Blades Container -->
+        <div id="grass-container"></div>
+        
+        <!-- Particle Effects Container -->
+        <div id="particles-container"></div>
+        
+        <!-- Motivational Messages -->
+        <div id="message" class="hidden"></div>
+    </div>
+    
+    <!-- Instructions -->
+    <div id="instructions">
+        <p>Move your cursor around to touch grass! 🌱</p>
+        <p class="mobile-hint">On mobile: Drag your finger across the screen</p>
+        <button id="start-btn">Start Touching Grass</button>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

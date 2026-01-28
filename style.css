@@ -1,0 +1,310 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow: hidden;
+    cursor: none;
+    user-select: none;
+    background: #87CEEB;
+}
+
+#grass-field {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background: linear-gradient(
+        to bottom,
+        #87CEEB 0%,
+        #98FB98 40%,
+        #90EE90 60%,
+        #32CD32 80%,
+        #228B22 100%
+    );
+    overflow: hidden;
+}
+
+.sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(
+        to bottom,
+        #87CEEB 0%,
+        #B0E0E6 50%,
+        #E0F6FF 100%
+    );
+    z-index: 1;
+}
+
+/* Add some cloud patterns */
+.sky::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    width: 100px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50px;
+    box-shadow: 
+        120px 20px 0 rgba(255, 255, 255, 0.6),
+        200px -10px 0 rgba(255, 255, 255, 0.7),
+        350px 30px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* UI Elements */
+.ui {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.title {
+    text-align: center;
+    padding: 20px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.title h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 10px;
+}
+
+.title p {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    opacity: 0.9;
+}
+
+.stats {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.stat {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #228B22;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Hand Cursor */
+#hand-cursor {
+    position: absolute;
+    font-size: 2rem;
+    pointer-events: none;
+    z-index: 50;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+}
+
+/* Grass Container */
+#grass-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    z-index: 10;
+}
+
+/* Individual Grass Blades */
+.grass-blade {
+    position: absolute;
+    width: 8px;
+    height: 40px;
+    background: linear-gradient(to top, #228B22, #32CD32, #90EE90);
+    border-radius: 4px 4px 2px 2px;
+    transform-origin: bottom center;
+    transition: transform 0.3s ease;
+}
+
+.grass-blade.touched {
+    transform: rotate(15deg) scale(0.9);
+    background: linear-gradient(to top, #32CD32, #90EE90, #98FB98);
+}
+
+/* Particles */
+#particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 30;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #90EE90;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particle-float 1s ease-out forwards;
+}
+
+@keyframes particle-float {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.5);
+    }
+}
+
+/* Messages */
+#message {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px 25px;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #228B22;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    z-index: 40;
+    animation: message-bounce 0.5s ease;
+}
+
+@keyframes message-bounce {
+    0% { transform: translateX(-50%) translateY(20px) scale(0.8); opacity: 0; }
+    100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Instructions Overlay */
+#instructions {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(34, 139, 34, 0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    color: white;
+    text-align: center;
+}
+
+#instructions p {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-hint {
+    font-size: 1.1rem !important;
+    opacity: 0.8;
+}
+
+#start-btn {
+    background: #90EE90;
+    color: #228B22;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+#start-btn:hover {
+    background: #98FB98;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+#start-btn:active {
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .title h1 {
+        font-size: 2rem;
+    }
+    
+    .title p {
+        font-size: 0.9rem;
+    }
+    
+    .stats {
+        top: 10px;
+        right: 10px;
+        gap: 10px;
+    }
+    
+    .stat {
+        padding: 8px 12px;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    #hand-cursor {
+        font-size: 1.5rem;
+    }
+    
+    #instructions p {
+        font-size: 1.2rem;
+        padding: 0 20px;
+    }
+}
+
+/* Hide scrollbars */
+::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
