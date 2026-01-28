@@ -31,10 +31,16 @@ class GrassSimulator {
     }
     
     bindEvents() {
-        // Start button
-        document.getElementById('start-btn').addEventListener('click', () => {
-            this.startSimulator();
-        });
+        // Start button with better error handling
+        const startBtn = document.getElementById('start-btn');
+        if (startBtn) {
+            startBtn.addEventListener('click', (e) => {
+                console.log('Start button clicked!');
+                this.startSimulator();
+            });
+        } else {
+            console.error('Start button not found!');
+        }
         
         // Mouse events
         document.addEventListener('mousemove', (e) => {
@@ -62,17 +68,24 @@ class GrassSimulator {
     }
     
     startSimulator() {
+        console.log('Starting simulator...');
         this.isStarted = true;
         this.startTime = Date.now();
         
         // Hide instructions
-        document.getElementById('instructions').style.display = 'none';
+        const instructions = document.getElementById('instructions');
+        if (instructions) {
+            instructions.style.display = 'none';
+            console.log('Instructions hidden');
+        }
         
         // Start timer
         this.startTimer();
         
         // Show initial message
         this.showMessage("Welcome to the great outdoors! 🌱");
+        
+        console.log('Simulator started successfully!');
     }
     
     generateGrass() {
@@ -237,21 +250,34 @@ class GrassSimulator {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing simulator...');
     const simulator = new GrassSimulator();
+    
+    // Make simulator globally accessible for debugging
+    window.simulator = simulator;
+    
+    // Backup start button handler
+    window.startGrassSimulator = () => {
+        console.log('Backup start function called');
+        simulator.startSimulator();
+    };
     
     // Handle window resize
     window.addEventListener('resize', () => {
         simulator.handleResize();
     });
     
-    // Prevent default touch behaviors
-    document.addEventListener('touchmove', (e) => {
-        e.preventDefault();
-    }, { passive: false });
-    
-    document.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-    }, { passive: false });
+    // Prevent default touch behaviors on grass field only
+    const grassField = document.getElementById('grass-field');
+    if (grassField) {
+        grassField.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
+        
+        grassField.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+        }, { passive: false });
+    }
 });
 
 // Easter eggs and fun interactions
